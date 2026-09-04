@@ -54,21 +54,32 @@ def generar_elecciones(arr: list[int]):
   return resultado_sofia, resultado_mateo
 
 def generar_array_random(elementos, valor_max):
-  return [floor((random() * (valor_max-1)) + 1) for i in range(elementos)]
+  return [round((random() * (valor_max-1)) + 1) for i in range(elementos)]
 
 def prueba():
   n = 100_000
   gana_sofia, empate = 0,0
+  empate_trivial = 0
   for i in range(n):
-    arr = generar_array_random(floor(random() * 499 + 1),floor(random() * 14 + 1))
-    s,m = generar_elecciones(arr)
+    num_elems = floor(random() * 499 + 1)
+    valor_max = floor(random() * 14 + 1)
+    arr = generar_array_random(num_elems,valor_max)
+    s,m = generar_elecciones(arr.copy())
     sum_s = sum(s)
     sum_m = sum(m)
     if sum_s > sum_m:
       gana_sofia += 1
     if sum_s == sum_m:
       empate += 1
-  print(f"Sofia gana: {gana_sofia} mateo: {n - gana_sofia - empate} empates: {empate}")
+      if (num_elems % 2 == 0) and valor_max == 1:
+        empate_trivial += 1
+        #print("Caso elementos par modenas de 1 (empate trivial)")
+        continue
+      else:
+        print(num_elems,valor_max)
+        print(arr)
+
+  print(f"Sofia gana: {gana_sofia} mateo: {n - gana_sofia - empate} empates: {empate} triv: {(empate_trivial / empate) * 100.0}%")
 
 prueba()
 """
@@ -81,3 +92,15 @@ Executed in   14.28 secs    fish           external
    sys time    0.00 secs  262.00 micros    0.00 secs
 """
 #Quiza medio lento, hay que verificar si los empates son optimos, es decir. Son situaciones en las que no se puede ganar.
+# Avanze rapido:
+# Los casos en los que el valor maximo es 1 y el arreglo es de largo par es trivial, va a quedar n/2 1 para sofia y n/2 1 para mateo:
+"""
+❯ time python main.py
+Sofia gana: 96418 mateo: 0 empates: 3582 triv: 98.88330541596874%
+"""
+#los otros que veo son:
+# [2, 2, 2, 2]
+# [2, 5, 5, 2]
+# [1, 1, 2, 2, 1, 1]
+#
+# Por lo que parece que anda
