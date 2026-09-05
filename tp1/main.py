@@ -9,6 +9,8 @@ from collections import deque
 from math import ceil, floor
 from random import random, sample
 
+from pruebas.loader import cargar_archivo
+
 #
 # Demostracion:
 # Dado el arreglo de monedas:
@@ -75,8 +77,19 @@ def prueba_casos_borde():
     if sum(s) <= sum(m):
       print(f"FALLA {arr}: sofia no gana ({sum(s)} vs {sum(m)})")
 
+def prueba_casos_catedra():
+  for file in ["pruebas/TP1/20.txt","pruebas/TP1/25.txt","pruebas/TP1/50.txt","pruebas/TP1/100.txt","pruebas/TP1/1000.txt","pruebas/TP1/10000.txt","pruebas/TP1/20000.txt"]:
+    archivo = cargar_archivo(file)
+    s,m = generar_elecciones_simple(archivo.copy())
+    sum_s = sum(s)
+    sum_m = sum(m)
+    if sum_s <= sum_m:
+      print(f"Se esperaba victoria en prueba de catedra: {file}")
+
 def prueba():
   prueba_casos_borde()
+  prueba_casos_catedra()
+  return
   n = 100_000
   gana_sofia = 0
   for i in range(n):
