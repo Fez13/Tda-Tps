@@ -63,12 +63,10 @@ def generar_elecciones_simple(arr: list[int]):
 def generar_array_random(elementos, valor_max):
   return sample(range(1, valor_max + 1), elementos)
 
-# Casos borde: la consigna pide que Sofia gane (no importa el margen).
-# Fallan si Sofia no gana (empata o pierde).
 CASOS_BORDE = [
-  [3, 4, 1, 2],        # empate de ganancias: ejerce el desempate
-  [3, 1, 2, 5, 4],     # la eleccion inmediata (max/min extremos) difiere de la ganancia
-  [2, 1, 5, 3, 4],     # caso de margen suboptimo conocido (igual gana)
+  [3, 4, 1, 2],
+  [3, 1, 2, 5, 4],
+  [2, 1, 5, 3, 4],
 ]
 
 def prueba_casos_borde():
