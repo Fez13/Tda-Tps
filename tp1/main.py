@@ -9,6 +9,39 @@ from collections import deque
 from math import ceil, floor
 from random import random, sample
 
+#
+# Demostracion:
+# Dado el arreglo de monedas:
+# S = [l1, l2, ..., ln]
+#
+# Se toma:
+#   M1 = max{l1,ln}
+#   m1 = min{l2,ln} o min{l1,l(n-1)}
+#
+# Si M1 elije l1, es porque l1 > ln -> m1 < l1 ya que m1 es el minimo entre ln y otro
+# de la misma forma si se elije rn
+#
+# En general M1 > m1
+# ahora las listas de solucion quedan
+# p1 = {M1} (sofi)
+# p2 = {m1} (mateo)
+#
+# Esto se repite hasta el ultimo elemento
+#
+# p1 = {M1,M2,...,M(n/2), M(n/2 + 1)} El ultimo elemento es en caso de n impar, si no es 0
+# p2 = {m1,m2,...,m(n/2)}
+#
+# ahora:
+#   Mn > mn y M(n/2 + 1) >= 0
+# por lo que:
+#   sum(Mk - mk) + M(n/2 + 1) >= 0 -- Solo es igual en caso de array vacio o donde hay una moneda con 0
+#   divido la suma:
+#   sum(Mk) + M(n/2 + 1) - sum(mk) >= 0
+#   sum(Ml) + M(n/2 + 1) >= sum(mk)
+#
+# Y ese es el objetivo ya que las monedas de sofia M, son siempre mayores a las de mateo m, salvo por el caso trivial de empate.
+#
+
 def generar_elecciones_simple(arr: list[int]):
   resultado_sofia = deque()
   resultado_mateo = deque()
